@@ -11,7 +11,7 @@ super + d
 
 # powermenu
 super + p
-	$HOME/.config/polybar/blocks/scripts/powermenu.sh
+    $HOME/.config/polybar/blocks/scripts/powermenu.sh
 
 # web browser
 super + b

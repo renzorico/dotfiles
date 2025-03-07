@@ -3,8 +3,6 @@
 bluetooth_print() {
     bluetoothctl | while read -r; do
         if [ "$(systemctl is-active "bluetooth.service")" = "active" ]; then
-            printf '#1'
-
             devices_paired=$(bluetoothctl devices Paired | grep Device | cut -d ' ' -f 2)
             counter=0
 
@@ -17,7 +15,7 @@ bluetooth_print() {
                     if [ $counter -gt 0 ]; then
                         printf ", %s" "$device_alias"
                     else
-                        printf " %s" "$device_alias"
+                        printf "%s" "$device_alias"
                     fi
 
                     counter=$((counter + 1))
@@ -26,7 +24,7 @@ bluetooth_print() {
 
             printf '\n'
         else
-            echo "#2"
+            echo "Bluetooth is off"
         fi
     done
 }
@@ -35,11 +33,8 @@ bluetooth_toggle() {
     if bluetoothctl show | grep -q "Powered: no"; then
         bluetoothctl power on >> /dev/null
         sleep 1
-
-        devices_paired=$(bluetoothctl devices Paired | grep Device | cut -d ' ' -f 2)
-        echo "$devices_paired" | while read -r line; do
-            bluetoothctl connect "$line" >> /dev/null
-        done
+        echo "Bluetooth powered on. Available devices:"
+        bluetoothctl devices
     else
         devices_paired=$(bluetoothctl devices Paired | grep Device | cut -d ' ' -f 2)
         echo "$devices_paired" | while read -r line; do
@@ -47,6 +42,7 @@ bluetooth_toggle() {
         done
 
         bluetoothctl power off >> /dev/null
+        echo "Bluetooth powered off."
     fi
 }
 
@@ -58,3 +54,4 @@ case "$1" in
         bluetooth_print
         ;;
 esac
+

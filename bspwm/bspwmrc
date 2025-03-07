@@ -3,7 +3,7 @@
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 if [[ $(xrander -q | grep 'HDMI-1-0 connected') ]]; then
-  xrandr --output eDP-1 --primary --mode 1920x1080 --rotate normal --output HDMI-1-0 --mode 2560x1440 --rate 144 --rotate normal --right-of eDP-1
+  xrandr --output eDP-1 --primary --mode 1920x1080 --rotate normal --output HDMI-1-0 --mode 1280x800 --rate 59.81 --left-of eDP-1 --auto
 fi
 
 bspc monitor HDMI-1-0 -d 4 5 6
@@ -27,12 +27,6 @@ bspc rule -a discord       desktop='^7' state=tiled follow=on
 bspc rule -a Steam         desktop='^8' state=tiled follow=off
 bspc rule -a thunderbird   desktop='^3' state=tiled follow=on
 bspc rule -a Virt-manager  desktop='^9' state=tiled follow=on
-bspc rule -a Zathura	   state=tiled    follow=on
-bspc rule -a Gpick         state=floating follow=on
-bspc rule -a Lxappearance  state=floating follow=on
-bspc rule -a openrgb       state=floating follow=on
-bspc rule -a Piper         state=floating follow=on
-bspc rule -a Pavucontrol   state=floating follow=on
 
 picom --config ~/.config/picom/picom.conf &
 /home/renzorico/.config/bspwm/autostart &
